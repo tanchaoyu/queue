@@ -7,7 +7,7 @@ const Container = styled.div`
     display:flex;
     align-items:center;
     height:8vh;
-    min-height:30px;
+    min-height:50px;
     background:#36cfc9;
     img{
         width:30px;

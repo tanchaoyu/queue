@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 axios.interceptors.request.use(function (config) {
-    // 在发送请求之前做些什么
+    // 在发送请求之前配置headers中的token信息
     config.headers.Authorization = window.sessionStorage.getItem('token');
     return config;
   })
@@ -24,7 +24,6 @@ const Login = (stdnumber:string,password:string) => {
   });
 };
 const getUserMsg = () =>{
-    console.log(token)
     return new Promise(function(resolve){
         axios({
             url:baseUrl + "/getUserMsg",
@@ -35,13 +34,13 @@ const getUserMsg = () =>{
         });
     });
 };
-const publishActive = (num:number,position:string,remarks:string,startTime:string,endTime:string,unit:number) =>{
-    console.log(token)
+const publishActive = (name:string,num:number,position:string,remarks:string,startTime:string,endTime:string,unit:number) =>{
     return new Promise(function(resolve){
         axios({
             url:baseUrl + "/publishActive",
             method:"post",
             params:{
+                name:name,
                 num:num,
                 position:position,
                 remarks:remarks,
@@ -72,7 +71,6 @@ const deleteActive = (id:number) =>{
 };
 
 const getUnit = () =>{
-    console.log(token)
     return new Promise(function(resolve){
         axios({
             url:baseUrl + "/getUnit",
@@ -87,7 +85,6 @@ const getUnit = () =>{
     });
 };
 const getAllUnits = () =>{
-    console.log(token)
     return new Promise(function(resolve){
         axios({
             url:baseUrl + "/getAllUnits",
@@ -106,7 +103,6 @@ const getAllUnits = () =>{
  * @param unit 由数字和空格组成的字符串，每一个和数字代表一个单位，是这个单位的id，不同的数字用空格分隔
  */
 const setUnit = (unit:string) =>{
-    console.log(token)
     return new Promise(function(resolve){
         axios({
             url:baseUrl + "/setUnit",
@@ -168,7 +164,7 @@ const getJoinActive = () =>{
     return new Promise(function(resolve){
         axios({
             url:baseUrl + "/getJoinActive",
-            method:"post",
+            method:"get",
             params:{
                 
             }
@@ -234,6 +230,5 @@ export  {
     getJoinActive,
     getPublishedActivesUnsroll,
     getPublishedActivesSroll,
-
-    
+    arrange
 }

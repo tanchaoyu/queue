@@ -1,8 +1,9 @@
-import React ,{ useState }from 'react';
+import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {Login,getUserMsg} from '@/http/http'
+import { useHistory } from 'umi';
+import { Login, getUserMsg } from '@/http/http';
 /*
   styled-components传参数需要直接在目标样式元素上，子元素上传参数会提示无目标属性
   或许可用ThemeProvider解决
@@ -36,15 +37,25 @@ const Container = styled.div`
 `;
 
 export default () => {
+  const history = useHistory();
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
     let stdnumber = values.username;
     let password = values.password;
-    Login(stdnumber,password).then((res:any)=>{
+    Login(stdnumber, password).then((res: any) => {
       console.log(res);
-      sessionStorage.setItem("token",res.data.data.token);
-      getUserMsg();
-    })
+      if (res.data.code == 200) {
+        sessionStorage.setItem('token', res.data.data.token);
+        if (res.data.data.firstLogin == "true") {
+          history.push('/unit');
+        } else {
+          history.replace('/index');
+        }
+      }
+      else{
+        alert("账号或密码错误");
+      }
+    });
   };
   return (
     <Container>

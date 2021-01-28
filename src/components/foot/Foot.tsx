@@ -9,8 +9,8 @@ import onmy from '@/assets/onmy.png';
 const Container = styled.div`
   width: 100vw;
   height: 10vh;
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  z-index: 99;
   top: 90vh;
   display: flex;
   justify-content:space-around;
